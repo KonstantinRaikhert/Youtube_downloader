@@ -1,7 +1,4 @@
-from selenium.webdriver import Chrome
 from selenium.webdriver.common.by import By
-from webdriver_manager.chrome import ChromeDriverManager
-from driver import Driver
 import pathlib
 import time
 
@@ -52,11 +49,3 @@ class YouTubeChannelVideos:
                     file.write(url + '\n')
         else:
             print('File already exists')
-
-
-if __name__ == '__main__':
-    channel_url = input("Введите ссылку на канал:\n")
-    driver = Driver(web_driver=Chrome, driver_manager=ChromeDriverManager).get_driver()
-    channel = YouTubeChannelVideos(channel_url=channel_url, driver=driver)
-    channel.urls_save_in_file()
-    channel.close_driver()

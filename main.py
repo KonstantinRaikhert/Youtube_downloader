@@ -1,30 +1,25 @@
-import pafy
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
-API_KEY = os.getenv('API_KEY')
-
-pafy.set_api_key(API_KEY)
-
-url = 'https://www.youtube.com/watch?v=0uAxgTkr6pI'
-
-get = pafy.new(url)
-
-save = get.getbest()
+from downloader import DownLoader
+from selenium.webdriver import Chrome
+from url_list import YouTubeChannelVideos
+from webdriver_manager.chrome import ChromeDriverManager
+from driver import Driver
 
 
+def get_urls_file():
+    channel_url = input("Введите ссылку на канал:\n")
+    driver = Driver(web_driver=Chrome, driver_manager=ChromeDriverManager).get_driver()
+    channel = YouTubeChannelVideos(channel_url=channel_url, driver=driver)
+    channel.urls_save_in_file()
+    channel.close_driver()
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+8 to toggle the breakpoint.
+def download_videos(filepath):
+    with open('urls.txt', 'rt') as file:
+        for url in file:
+            DownLoader(url).downloader(filepath)
+            continue
 
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    save = get.getbest()
-    save.download()
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    get_urls_file()
+    download_videos(filepath=input("Введите путь для сохранения файлов:\n"))
