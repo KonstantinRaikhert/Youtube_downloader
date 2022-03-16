@@ -133,3 +133,7 @@ dmypy.json
 
 # PyCharm
 .idea/
+
+# Download Path
+download/
+temp_data/

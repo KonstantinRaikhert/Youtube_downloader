@@ -42,3 +42,8 @@ class DownLoader:
                 desc=self.get_best().title, total=self.video_size, unit_scale=True, unit='B', initial=0
         ) as progressbar:
             self.get_best().download(quiet=True, filepath=filepath, callback=lambda _, received, *args: self.update(progressbar, received))
+
+
+if __name__ == '__main__':
+    a = DownLoader('https://youtube.com/watch?v=dDZBs4adKNc')._get_pafy_object()
+    print(a.callback)
